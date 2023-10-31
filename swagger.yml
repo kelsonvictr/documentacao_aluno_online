@@ -1,0 +1,145 @@
+openapi: 3.0.3
+info:
+  title: Aluno Online - API Back-end
+  description: |-
+    Esta é a documentação das APIs do Sistema Aluno Online.
+  version: 1.0.11
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Aluno
+    description: Endpoints da Entidade Aluno
+  - name: Professor
+    description: Endpoints da Entidade Professor
+  - name: Disciplina
+    description: Endpoints da Entidade Disciplina
+paths:
+  /aluno:
+    post:
+      tags:
+      - Aluno
+      summary: Cria um novo Aluno no Banco
+      description: Atualiza um Aluno Existente
+      operationId: createAluno
+      requestBody:
+        description: Atualiza um Aluno Existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+        required: true
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Aluno'                                    
+    put:
+      tags:
+        - Aluno
+      summary: Atualiza um Aluno Existente
+      description: Atualiza um Aluno Existente
+      operationId: updateAluno
+      requestBody:
+        description: Atualiza um Aluno Existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Aluno not found
+        '405':
+          description: Validation exception
+
+  /aluno/{id}:
+        delete:
+          tags:
+            - Aluno
+          summary: Exclui um aluno por ID
+          operationId: deleteAluno
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+          responses:
+            '204':
+              description: Aluno excluído com sucesso
+        get:
+          tags:
+          - Aluno
+          summary: Busca um aluno existente
+          description: Busca um aluno existente pelo ID
+          operationId: findById
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+          responses:
+            '200':
+              description: Aluno encontrado com sucesso
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Aluno'
+  /aluno/all:
+    get:
+      tags:
+        - Aluno
+      summary: Lista todos os alunos
+      operationId: findAllAlunos
+      responses:
+        '200':
+          description: Lista de alunos recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Aluno'
+components:
+  schemas:
+    Aluno:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        email:
+          type: string
+        curso:
+          type: string
